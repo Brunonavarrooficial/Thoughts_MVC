@@ -1,2 +1,2 @@
-# Toughs_MVC
+# Thoughts_MV
 Projeto com intuito de cadastrar os pensamentos 

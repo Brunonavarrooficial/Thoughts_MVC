@@ -19,6 +19,10 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
+// Models
+const User = require('./models/User')
+const Thoughts = require('./models/Thoughts')
+
 // session middleware
 app.use(
     session({
@@ -57,6 +61,7 @@ app.use((req, res, next) => {
 
 conn
     .sync()
+    //.sync({force: true})
     .then(() => {
         app.listen(3000, () => {
             console.log('Conectado a porta http://localhost:3000')
