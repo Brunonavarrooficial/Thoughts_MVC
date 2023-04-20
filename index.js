@@ -25,6 +25,7 @@ const Thoughts = require('./models/Thoughts')
 
 // Rotes
 const thoughtsRoutes = require('./routes/thoughtsRoutes')
+const authRoutes = require('./routes/authRoutes')
 
 // Controllers
 const ThoughtsController = require('./controllers/ThoughtsController')
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
 
 
 app.use('/thoughts', thoughtsRoutes)
+app.use('/', authRoutes)
 
 app.get('/', ThoughtsController.showThoughts)
 
