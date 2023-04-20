@@ -23,6 +23,12 @@ app.use(express.static('public'))
 const User = require('./models/User')
 const Thoughts = require('./models/Thoughts')
 
+// Rotes
+const thoughtsRoutes = require('./routes/thoughtsRoutes')
+
+// Controllers
+const ThoughtsController = require('./controllers/ThoughtsController')
+
 // session middleware
 app.use(
     session({
@@ -50,6 +56,7 @@ app.use(flash())
 app.use((req, res, next) => {
     if (req.session.userid) {
         res.locals.session = req.session
+        return
     }
 
     next()
@@ -57,7 +64,9 @@ app.use((req, res, next) => {
 })
 
 
+app.use('/thoughts', thoughtsRoutes)
 
+app.get('/', ThoughtsController.showThoughts)
 
 conn
     .sync()
