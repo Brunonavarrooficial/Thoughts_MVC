@@ -8,6 +8,42 @@ class AuthController {
         res.render('auth/login')
     }
 
+    static async loginPost(req, res) {
+
+        const { email, password } = req.body
+
+        const user = await User.findOne({ where: { email: email } })
+
+        if (!user) {
+            req.flash('message', 'usuário não encontrado!')
+            res.render('auth/login')
+            return
+        }
+
+        const passwordMatch = bcrypt.compareSync(password, user.password)
+
+        if (!passwordMatch) {
+            req.flash('message', 'Senha inválida!')
+            res.render('auth/login')
+            return
+
+        }
+
+        req.session.userid = user.id
+
+        console.log('Dados de Login user: ', user.name)
+        console.log('Id: ', req.session.userid)
+
+        //req.session.userid = user.id
+
+        req.flash('message', 'Login realizado com sucesso!')
+
+        req.session.save(() => {
+            //res.setHeader("Content-Type", "application/json");
+            res.redirect('/')
+        })
+    }
+
     static register(req, res) {
         res.render('auth/register')
     }
@@ -45,10 +81,10 @@ class AuthController {
                 // initialize session
                 req.session.userid = user.id
 
-                console.log('salvou os dados de user: ', user.name)
-                console.log(req.session.userid)
+                console.log('criado e salvo os dados de user: ', user.name)
+                console.log('Id: ', req.session.userid)
 
-                req.session.userid = user.id
+                //req.session.userid = user.id
 
                 req.flash('message', 'Cadastro realizado com sucesso!')
 
@@ -77,7 +113,7 @@ class AuthController {
         // }
     }
 
-    static async logout(req, res) {
+    static logout(req, res) {
         req.session.destroy()
         res.redirect('/login')
     }
