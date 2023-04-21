@@ -54,16 +54,25 @@ app.use(
 app.use(flash())
 
 //set session to res
+// app.use((req, res, next) => {
+//     if (req.session.userid) {
+//         res.locals.session = req.session
+//         return
+//     }
+
+//     next()
+
+// })
 app.use((req, res, next) => {
+
+    console.log('app.use meddleware => ', req.session.userid);
+
     if (req.session.userid) {
-        res.locals.session = req.session
-        return
+        res.locals.session = req.session;
     }
 
-    next()
-
-})
-
+    next();
+});
 
 app.use('/thoughts', thoughtsRoutes)
 app.use('/', authRoutes)

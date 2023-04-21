@@ -76,6 +76,11 @@ class AuthController {
         //     console.log('erro ao criar usuário: ', error)
         // }
     }
+
+    static async logout(req, res) {
+        req.session.destroy()
+        res.redirect('/login')
+    }
 }
 
 module.exports = AuthController
