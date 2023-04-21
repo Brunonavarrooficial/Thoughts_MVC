@@ -33,7 +33,7 @@ const ThoughtsController = require('./controllers/ThoughtsController')
 // session middleware
 app.use(
     session({
-        lname: 'session',
+        name: 'session',
         secret: 'nosso_secret',
         resave: false,
         saveUninitialized: false,
@@ -45,7 +45,7 @@ app.use(
             secure: false,
             maxAge: 360000,
             expires: new Date(Date.now() + 360000),
-            httpOnly: true
+            httpOnly: true,
         }
     }),
 )
@@ -72,7 +72,7 @@ app.get('/', ThoughtsController.showThoughts)
 
 conn
     .sync()
-    //.sync({force: true})
+    //.sync({ force: true })
     .then(() => {
         app.listen(3000, () => {
             console.log('Conectado a porta http://localhost:3000')
