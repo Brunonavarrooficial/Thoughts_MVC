@@ -7,7 +7,27 @@ class ThoughtsController {
     }
 
     static async dashboard(req, res) {
-        res.render('thoughts/dashboard')
+
+        const UserId = req.session.userid
+
+        const user = await User.findOne({
+            where: {
+                id: UserId
+            },
+            include: Thoughts,
+            plain: true,
+        })
+
+        if (!user) {
+            res.redirect('/login')
+        }
+
+        const thoughts = user.Thoughts.map((result) => result.dataValues)
+
+        console.log('pensamento teste => ', thoughts)
+
+        //const thought = Thoughts.findOne({ where: { UserId: UserId } })
+        res.render('thoughts/dashboard', { thoughts })
     }
 
     static createThought(req, res) {
