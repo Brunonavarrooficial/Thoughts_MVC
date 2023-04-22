@@ -2,7 +2,10 @@ const express = require('express')
 const router = express.Router()
 const AuthController = require('../controllers/AuthController')
 
-router.get('/login', AuthController.login)
+// helper
+const checkLogged = require('../helpers/auth').checkLogged
+
+router.get('/login', checkLogged, AuthController.login)
 router.post('/login', AuthController.loginPost)
 router.get('/register', AuthController.register)
 router.post('/register', AuthController.registerPost)
