@@ -54,6 +54,23 @@ class ThoughtsController {
         }
 
     }
+
+    static async removeThought(req, res) {
+        const id = req.body.id
+        const UserId = req.session.userid
+
+        try {
+            await Thoughts.destroy({ where: { id: id, UserId: UserId } })
+
+            req.flash('message', 'Pensamento removido com sucesso!')
+
+            req.session.save(() => {
+                res.redirect('/thoughts/dashboard')
+            })
+        } catch (error) {
+            console.log(`Erro ao excluir o thought => ${error}`)
+        }
+    }
 }
 
 
