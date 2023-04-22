@@ -26,8 +26,14 @@ class ThoughtsController {
 
         console.log('pensamento teste => ', thoughts)
 
-        //const thought = Thoughts.findOne({ where: { UserId: UserId } })
-        res.render('thoughts/dashboard', { thoughts })
+        let emptyThoughts = false
+
+        if (thoughts.length === 0) {
+            emptyThoughts = true
+        }
+
+
+        res.render('thoughts/dashboard', { thoughts, emptyThoughts })
     }
 
     static createThought(req, res) {
