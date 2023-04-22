@@ -61,6 +61,36 @@ class ThoughtsController {
 
     }
 
+    static async editThought(req, res) {
+        const id = req.params.id
+
+        const thought = await Thoughts.findOne({ where: { id: id }, raw: true })
+
+        res.render('thoughts/edit', { thought })
+    }
+
+    static async editThoughtSave(req, res) {
+
+        const thought = {
+            id: req.body.id,
+            title: req.body.title,
+            UserId: req.session.userid
+        }
+
+        try {
+            await Thoughts.update(thought, { where: { id: thought.id, UserId: thought.UserId } })
+
+            req.flash('message', 'Pensamento editado com sucesso!')
+
+            req.session.save(() => {
+                res.redirect('/thoughts/dashboard')
+            })
+        } catch (error) {
+            console.log('Erro ao editar pensamento => ', error)
+        }
+
+    }
+
     static async removeThought(req, res) {
         const id = req.body.id
         const UserId = req.session.userid
