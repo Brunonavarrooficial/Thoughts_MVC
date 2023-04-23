@@ -12,11 +12,20 @@ class ThoughtsController {
             search = req.query.search
         }
 
+        let order = 'DESC'
+
+        if (req.query.order === 'old') {
+            order = 'ASC'
+        } else {
+            order = 'DESC'
+        }
+
         const thoughtsAll = await Thoughts.findAll({
             include: User,
             where: {
                 title: { [Op.like]: `%${search}%` }
-            }
+            },
+            order: [['createdAt', order]]
         })
 
         //const thoughts = thoughtsAll.map((result) => result.dataValues)
