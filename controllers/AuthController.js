@@ -31,15 +31,9 @@ class AuthController {
 
         req.session.userid = user.id
 
-        console.log('Dados de Login user: ', user.name)
-        console.log('Id: ', req.session.userid)
-
-        //req.session.userid = user.id
-
         req.flash('message', 'Login realizado com sucesso!')
 
         req.session.save(() => {
-            //res.setHeader("Content-Type", "application/json");
             res.redirect('/')
         })
     }
@@ -81,36 +75,13 @@ class AuthController {
                 // initialize session
                 req.session.userid = user.id
 
-                console.log('criado e salvo os dados de user: ', user.name)
-                console.log('Id: ', req.session.userid)
-
-                //req.session.userid = user.id
-
                 req.flash('message', 'Cadastro realizado com sucesso!')
 
                 req.session.save(() => {
-                    //res.setHeader("Content-Type", "application/json");
                     res.redirect('/')
                 })
             })
             .catch((err) => console.log(err))
-
-        // try {
-        //     //await User.create(user)
-        //     const createdUser = await User.create(user)
-
-        //     //req.session.userid = user.id
-        //     req.session.userid = createdUser.id
-
-        //     req.flash('message', `Cadastro do User: ${createdUser.name} realizado com sucesso!`)
-
-        //     req.session.save(() => {
-        //         res.redirect('/')
-        //     })
-
-        // } catch (error) {
-        //     console.log('erro ao criar usuário: ', error)
-        // }
     }
 
     static logout(req, res) {

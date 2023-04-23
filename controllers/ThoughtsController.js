@@ -33,9 +33,6 @@ class ThoughtsController {
 
         let thoughtsQty = thoughts.length
 
-        console.log('findAll pensamentos', thoughts)
-        console.log('Search => ', search, 'quantidade de => ', thoughtsQty)
-
         if (thoughtsQty === 0) {
             thoughtsQty = false
         }
